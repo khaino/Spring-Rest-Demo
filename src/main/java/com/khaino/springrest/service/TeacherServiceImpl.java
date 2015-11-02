@@ -4,26 +4,26 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.khaino.springrest.dao.TeacherServiceDao;
+import com.khaino.springrest.dao.TeacherDao;
 import com.khaino.springrest.exception.NotExistException;
 import com.khaino.springrest.model.Teacher;
 
 public class TeacherServiceImpl implements TeacherService{
 	
 	@Autowired
-	private TeacherServiceDao teacherServiceDao;
+	private TeacherDao teacherDao;
 
 	@Override
 	public List<Teacher> getAllTeacher() {
 		
-		List<Teacher> teacherList = teacherServiceDao.getAllTeacher();
+		List<Teacher> teacherList = teacherDao.getAllTeacher();
 		return teacherList;
 	}
 
 	@Override
 	public Teacher getTeacher(int teacherId) throws NotExistException {
 		
-		Teacher teacher = teacherServiceDao.getTeacher(teacherId);
+		Teacher teacher = teacherDao.getTeacher(teacherId);
 		if( teacher == null){
 			throw new NotExistException("Teacher with id = " + teacherId);
 		}
@@ -33,19 +33,19 @@ public class TeacherServiceImpl implements TeacherService{
 	@Override
 	public Teacher insertTeacher(Teacher teacher) {
 
-		int row = teacherServiceDao.insertTeacher(teacher);
+		int row = teacherDao.insertTeacher(teacher);
 		if( row != 1){
 			//throw exception
 		}
-		int teacherId = teacherServiceDao.getLastInsertedId();				
-		Teacher newTeacher = teacherServiceDao.getTeacher(teacherId);
+		int teacherId = teacherDao.getLastInsertedId();				
+		Teacher newTeacher = teacherDao.getTeacher(teacherId);
 		return newTeacher;
 	}
 
 	@Override
 	public void updateTeacher(int teacherId, Teacher teacher) {
 		
-		int row = teacherServiceDao.updateTeacher(teacherId, teacher);
+		int row = teacherDao.updateTeacher(teacherId, teacher);
 		if( row != 1){
 			//throw exception
 		}
@@ -54,7 +54,7 @@ public class TeacherServiceImpl implements TeacherService{
 	@Override
 	public void deleteTeacher(int teacherId) {
 		
-		int row = teacherServiceDao.deleteTeacher(teacherId);
+		int row = teacherDao.deleteTeacher(teacherId);
 		if( row != 1){
 			//throw exception
 		}

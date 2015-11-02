@@ -35,6 +35,12 @@ public class Subject {
 	public void setTeacherId(int teacherId) {
 		this.teacherId = teacherId;
 	}
+
+	@Override
+	public String toString() {
+		return "Subject [subjectId=" + subjectId + ", subjectName=" + subjectName + ", teacherId=" + teacherId + "]";
+	}
+	
 	
 	
 }

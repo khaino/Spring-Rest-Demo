@@ -39,7 +39,8 @@
 	
 	<!-- bean for Service -->
 	<bean id="teacherService" class="com.khaino.springrest.service.TeacherServiceImpl"/>
-	
+	<bean id="subjectService" class="com.khaino.springrest.service.SubjectServiceImpl"/>
+	<bean id="lessonService" class="com.khaino.springrest.service.LessonServiceImpl"/>
 	
 </beans>
 
