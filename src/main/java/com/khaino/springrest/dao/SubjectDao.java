@@ -49,8 +49,14 @@ public interface SubjectDao {
 	public int deleteSubject( int id);
 	
 	
+	@Update("UPDATE subject" 
+			   + " SET"
+			   		+ " teacher_id= #{subject.teacherId}"
+			   	+ " WHERE subject_id= #{id}")
+	public int assignTeacher(@Param("id") int id, @Param("subject")Subject subject);
+	
+	
 	@Select("SELECT CURRVAL('subject_subject_id_seq')")
 	public int getLastInsertedId();
 	 
-
 }

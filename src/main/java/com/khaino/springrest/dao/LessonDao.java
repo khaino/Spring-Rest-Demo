@@ -17,8 +17,8 @@ public interface LessonDao {
 				+ " lesson_name AS lessonName,"
 				+ " subject_id AS subjectId" 
 			+ " FROM"
-				+ " lesson")
-	public List<Lesson> getAllLessons();
+				+ " lesson WHERE subject_id = #{subjectId}")
+	public List<Lesson> getAllLessons(int subjectId);
 
 
 	@Select("SELECT"

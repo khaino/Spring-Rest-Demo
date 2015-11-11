@@ -36,7 +36,7 @@ public class SubjectController {
 	}
 	
 	@RequestMapping( method = RequestMethod.GET )
-	public ResponseEntity<Resources<Resource<Subject>>> getAllSjubject(){		
+	public ResponseEntity<Resources<Resource<Subject>>> getAllSjubjects(){		
 		
 		List<Subject> subjectList = subjectService.getAllSubjects();
 		Resources<Resource<Subject>> resource = this.subjectResourceAssembler.toSubjectResourceList(subjectList);

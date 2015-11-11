@@ -14,9 +14,9 @@ public class LessonServiceImpl implements LessonService {
 	private LessonDao lessonDao;
 
 	@Override
-	public List<Lesson> getAllLessons() {
+	public List<Lesson> getAllLessons(int subjectId) {
 		
-		return lessonDao.getAllLessons();
+		return lessonDao.getAllLessons(subjectId);
 	}
 
 	@Override

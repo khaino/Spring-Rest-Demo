@@ -41,6 +41,7 @@
 	<bean id="teacherService" class="com.khaino.springrest.service.TeacherServiceImpl"/>
 	<bean id="subjectService" class="com.khaino.springrest.service.SubjectServiceImpl"/>
 	<bean id="lessonService" class="com.khaino.springrest.service.LessonServiceImpl"/>
+	<bean id="toturialService" class="com.khaino.springrest.service.ToturialService"/>
 	
 </beans>
 

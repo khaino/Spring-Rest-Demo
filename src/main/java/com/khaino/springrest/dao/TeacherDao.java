@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import com.khaino.springrest.model.Subject;
 import com.khaino.springrest.model.Teacher;
 
 public interface TeacherDao {
@@ -40,5 +41,16 @@ public interface TeacherDao {
 	
 	@Select("SELECT CURRVAL('teacher_teacher_id_seq')")
 	public int getLastInsertedId();
+	
+	
+	@Select("SELECT"
+			+ " subject_id AS subjectId,"
+			+ " subject_name AS subjectName,"
+			+ " teacher_id AS teacherId" 
+		+ " FROM"
+			+ " subject"
+		+ " WHERE"
+			+ " teacher_id =#{teacherId}")
+	public List<Subject> getAllSubjectsByTeacher( int teacherId );
 	
 }

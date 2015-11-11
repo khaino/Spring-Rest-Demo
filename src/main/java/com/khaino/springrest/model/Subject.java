@@ -4,13 +4,13 @@ public class Subject {
 
 	private int subjectId;
 	private String subjectName;
-	private int teacherId;
+	private Integer teacherId;
 	
 	public Subject(){
 		
 	}
 	
-	public Subject(int subjectId, String subjectName, int teacherId) {
+	public Subject(Integer subjectId, String subjectName, int teacherId) {
 		super();
 		this.subjectId = subjectId;
 		this.subjectName = subjectName;
@@ -29,10 +29,10 @@ public class Subject {
 	public void setSubjectName(String subjectName) {
 		this.subjectName = subjectName;
 	}
-	public int getTeacherId() {
+	public Integer getTeacherId() {
 		return teacherId;
 	}
-	public void setTeacherId(int teacherId) {
+	public void setTeacherId(Integer teacherId) {
 		this.teacherId = teacherId;
 	}
 
@@ -40,7 +40,5 @@ public class Subject {
 	public String toString() {
 		return "Subject [subjectId=" + subjectId + ", subjectName=" + subjectName + ", teacherId=" + teacherId + "]";
 	}
-	
-	
-	
+			
 }

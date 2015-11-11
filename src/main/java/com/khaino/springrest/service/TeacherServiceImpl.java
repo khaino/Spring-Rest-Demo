@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.khaino.springrest.dao.TeacherDao;
 import com.khaino.springrest.exception.NotExistException;
+import com.khaino.springrest.model.Subject;
 import com.khaino.springrest.model.Teacher;
 
 public class TeacherServiceImpl implements TeacherService{
@@ -59,5 +60,13 @@ public class TeacherServiceImpl implements TeacherService{
 			//throw exception
 		}
 	}
+
+	@Override
+	public List<Subject> getAllSubjectsByTeacher(int teacherId) {
+		
+		return teacherDao.getAllSubjectsByTeacher(teacherId);
+	}
+
+	
 
 }

@@ -9,39 +9,46 @@ import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.stereotype.Component;
 
+import com.khaino.springrest.constant.Constant;
 import com.khaino.springrest.controller.SubjectController;
 import com.khaino.springrest.controller.TeacherController;
 import com.khaino.springrest.model.Subject;
-import com.khaino.springrest.model.Teacher;
 
 @Component
 public class SubjectResourceAssembler {
-	
-	public Resource<Teacher> toTeacherResource(Teacher teacher) {
-        Resource<Teacher> resource = new Resource<Teacher>(teacher);
-        resource.add(linkTo(TeacherController.class)
-        				.slash(teacher.getTeacherId())
-        				.withSelfRel());
-        return resource;
-    }
-	
+
 	public Resource<Subject> toSubjectResource(Subject subject) {
-        Resource<Subject> resource = new Resource<Subject>(subject);
-        resource.add(linkTo(SubjectController.class)
-        				.slash(subject.getSubjectId())
-        				.withSelfRel());
-        return resource;
-    }
-	
-	public Resources<Resource<Subject>> toSubjectResourceList(List<Subject> subjectList){		
-		List<Resource<Subject>> resourceList = new ArrayList<Resource<Subject>>();	
-		
-		for (Subject subject : subjectList) {			
+
+		Resource<Subject> resource = new Resource<Subject>(subject);
+
+		resource.add(linkTo(SubjectController.class)
+				.slash(subject.getSubjectId()).withSelfRel());
+
+		if (subject.getSubjectId() != 0) {
+			resource.add(linkTo(TeacherController.class)
+					.slash(subject.getTeacherId()).withRel(Constant.TEACHER));
+		}
+
+		resource.add(linkTo(SubjectController.class)
+				.slash(subject.getSubjectId()).withRel(Constant.EDIT));
+
+		resource.add(linkTo(SubjectController.class)
+				.slash(subject.getSubjectId()).withRel(Constant.DELETE));
+
+		return resource;
+	}
+
+	public Resources<Resource<Subject>> toSubjectResourceList(List<Subject> subjectList) {
+
+		List<Resource<Subject>> resourceList = new ArrayList<Resource<Subject>>();
+
+		for (Subject subject : subjectList) {
 			resourceList.add(toSubjectResource(subject));
-		}		
+		}
+
 		Resources<Resource<Subject>> resource = new Resources<Resource<Subject>>(resourceList);
 		resource.add(linkTo(SubjectController.class).withSelfRel());
-		
-		return resource;		
+
+		return resource;
 	}
 }

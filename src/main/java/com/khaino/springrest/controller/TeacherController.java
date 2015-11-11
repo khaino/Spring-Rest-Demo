@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.khaino.springrest.assembler.TeacherResourceAssembler;
 import com.khaino.springrest.exception.NotExistException;
 import com.khaino.springrest.model.ExceptionMessage;
+import com.khaino.springrest.model.Subject;
 import com.khaino.springrest.model.Teacher;
 import com.khaino.springrest.service.TeacherService;
 
@@ -43,7 +44,7 @@ public class TeacherController {
 	}
 
 
-	@RequestMapping( method = RequestMethod.GET, value = "/{teacherId}" )
+	@RequestMapping( value = "/{teacherId}", method = RequestMethod.GET )
 	public Resource<Teacher> getTeacher(@PathVariable int teacherId) throws NotExistException{
 		
 		Teacher teacher = teacherService.getTeacher(teacherId);
@@ -59,7 +60,7 @@ public class TeacherController {
 		return new ResponseEntity<Resource<Teacher>>(resource, HttpStatus.CREATED);		
 	}
 	
-	@RequestMapping( method = RequestMethod.PUT, value = "/{teacherId}" )
+	@RequestMapping( value = "/{teacherId}", method = RequestMethod.PUT )
 	public ResponseEntity<Resource<Teacher>> updateTeacher(@RequestBody Teacher teacher, @PathVariable int teacherId) {
 		
 		teacherService.updateTeacher(teacherId, teacher);	
@@ -69,11 +70,19 @@ public class TeacherController {
 	}
 	
 	
-	@RequestMapping( method = RequestMethod.DELETE, value = "/{teacherId}" )
+	@RequestMapping( value = "/{teacherId}", method = RequestMethod.DELETE )
 	public ResponseEntity<Void> deleteTeacher( @PathVariable int teacherId){
 		
 		teacherService.deleteTeacher(teacherId);	
 		return new ResponseEntity<Void>( HttpStatus.OK);		
+	}
+	
+	@RequestMapping( value = "/{teacherId}/subjects",method = RequestMethod.GET )
+	public ResponseEntity<Resources<Resource<Subject>>> getAllSjubjects(@PathVariable int teacherId){		
+		
+		List<Subject> subjectList = teacherService.getAllSubjectsByTeacher(teacherId);
+		Resources<Resource<Subject>> resource = this.teacherResourceAssembler.toSubjectResourceList(subjectList, teacherId);
+		return new ResponseEntity<Resources<Resource<Subject>>>(resource, HttpStatus.OK);
 	}
 	
 	
