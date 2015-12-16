@@ -1,6 +1,6 @@
 <h1>Spring-REST-Demo</h1>
 <p>This is to demonstrate Spring Restful Demo.</p>
-<p>The tables needed for this demo is give below </p>
+<p>I use Postgres DB and myBatis for ORM. The database tables needed for this demo is give below </p>
 
 <pre>
 	CREATE TABLE LESSON
