@@ -23,74 +23,82 @@ import com.khaino.springrest.model.Subject;
 import com.khaino.springrest.service.SubjectService;
 
 @RestController
-@RequestMapping( value = "/subjects", produces = { MediaType.APPLICATION_JSON_VALUE } )
+@RequestMapping(value = "/subjects", produces = { MediaType.APPLICATION_JSON_VALUE })
 public class SubjectController {
-	
+
 	final private SubjectResourceAssembler subjectResourceAssembler;
 	final private SubjectService subjectService;
-	
+
 	@Autowired
-	SubjectController(SubjectResourceAssembler subjectResourceAssembler, SubjectService subjectService){
+	SubjectController(SubjectResourceAssembler subjectResourceAssembler, 
+			SubjectService subjectService) {
 		this.subjectResourceAssembler = subjectResourceAssembler;
 		this.subjectService = subjectService;
 	}
-	
-	@RequestMapping( method = RequestMethod.GET )
-	public ResponseEntity<Resources<Resource<Subject>>> getAllSjubjects(){		
-		
+
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<Resources<Resource<Subject>>> getAllSjubjects() {
+
 		List<Subject> subjectList = subjectService.getAllSubjects();
-		Resources<Resource<Subject>> resource = this.subjectResourceAssembler.toSubjectResourceList(subjectList);
+		Resources<Resource<Subject>> resource 
+			= this.subjectResourceAssembler.toSubjectResourceList(subjectList);
 		return new ResponseEntity<Resources<Resource<Subject>>>(resource, HttpStatus.OK);
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value = "/{subjectId}")
+	public Resource<Subject> getSubject(@PathVariable int subjectId) throws NotExistException {
 
-	@RequestMapping( method = RequestMethod.GET, value = "/{subjectId}" )
-	public Resource<Subject> getSubject(@PathVariable int subjectId) throws NotExistException{
-		
 		Subject subject = subjectService.getSubject(subjectId);
 		Resource<Subject> resource = subjectResourceAssembler.toSubjectResource(subject);
-		return resource;		
+		return resource;
 	}
-	
-	@RequestMapping( method = RequestMethod.POST )
-	public ResponseEntity<Resource<Subject>> saveTeacher(@RequestBody Subject subject) throws NotExistException{
-		
+
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<Resource<Subject>> saveTeacher(@RequestBody Subject subject) throws NotExistException {
+
 		Subject newSubject = subjectService.insertSubject(subject);
 		Resource<Subject> resource = subjectResourceAssembler.toSubjectResource(newSubject);
-		return new ResponseEntity<Resource<Subject>>(resource, HttpStatus.CREATED);		
+		return new ResponseEntity<Resource<Subject>>(resource, HttpStatus.CREATED);
 	}
-	
-	@RequestMapping( method = RequestMethod.PUT, value = "/{subjectId}" )
-	public ResponseEntity<Resource<Subject>> updateSubject(@RequestBody Subject subject, @PathVariable int subjectId) {
-		
+
+	@RequestMapping(method = RequestMethod.PUT, value = "/{subjectId}")
+	public ResponseEntity<Resource<Subject>> updateSubject(@RequestBody Subject subject, 
+			@PathVariable int subjectId) {
+
 		subject.setSubjectId(subjectId);
-		subjectService.updateSubject(subjectId, subject);	
-		
+		subjectService.updateSubject(subjectId, subject);
+
 		Resource<Subject> resource = subjectResourceAssembler.toSubjectResource(subject);
-		return new ResponseEntity<Resource<Subject>>(resource, HttpStatus.OK);	
+		return new ResponseEntity<Resource<Subject>>(resource, HttpStatus.OK);
 	}
-	
-	
-	@RequestMapping( method = RequestMethod.DELETE, value = "/{subjectId}" )
-	public ResponseEntity<Void> deleteSubject( @PathVariable int subjectId){
-		
-		subjectService.deleteSubject(subjectId);	
-		return new ResponseEntity<Void>( HttpStatus.OK);		
+
+	@RequestMapping(method = RequestMethod.DELETE, value = "/{subjectId}")
+	public ResponseEntity<Void> deleteSubject(@PathVariable int subjectId) {
+
+		subjectService.deleteSubject(subjectId);
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
-	
-	
+
+	@RequestMapping(method = RequestMethod.PUT, value = "/{subjectId}/assignto/{teacherId}")
+	public ResponseEntity<Void> assignTeacher(@PathVariable int subjectId, 
+			@PathVariable int teacherId) {
+
+		subjectService.assignTeacher(subjectId, teacherId);
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+
 	@ExceptionHandler({ NotExistException.class })
-    ResponseEntity<ExceptionMessage> handleNotFounds(Exception e) {
-		ExceptionMessage exceptionMessage = 
-				new ExceptionMessage(HttpStatus.NOT_FOUND.toString(), e.getMessage());
+	ResponseEntity<ExceptionMessage> handleNotFounds(Exception e) {
+		ExceptionMessage exceptionMessage 
+			= new ExceptionMessage(HttpStatus.NOT_FOUND.toString(), e.getMessage());
 		return new ResponseEntity<ExceptionMessage>(exceptionMessage, HttpStatus.NOT_FOUND);
-    }
-	
+	}
+
 	@ExceptionHandler({ PSQLException.class })
-    ResponseEntity<ExceptionMessage> duplicateKey(Exception e) {
-		ExceptionMessage exceptionMessage = 
-				new ExceptionMessage(HttpStatus.CONFLICT.toString(), e.getMessage());
+	ResponseEntity<ExceptionMessage> duplicateKey(Exception e) {
+		ExceptionMessage exceptionMessage 
+			= new ExceptionMessage(HttpStatus.CONFLICT.toString(), e.getMessage());
 		return new ResponseEntity<ExceptionMessage>(exceptionMessage, HttpStatus.NOT_FOUND);
-    }
+	}
 
 }

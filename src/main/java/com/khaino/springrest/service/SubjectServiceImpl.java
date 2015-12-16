@@ -58,11 +58,10 @@ public class SubjectServiceImpl implements SubjectService {
 	}
 
 	@Override
-	public void assignTeacher(int subjectId, Subject subject) {
-		// TODO Auto-generated method stub
+	public void assignTeacher(int subjectId, int teacherId) {
+		
+		subjectDao.assignTeacher(subjectId, teacherId);
 		
 	}
-
-	
 
 }

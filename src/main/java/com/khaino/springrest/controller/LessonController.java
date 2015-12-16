@@ -23,14 +23,16 @@ import com.khaino.springrest.model.Lesson;
 import com.khaino.springrest.service.LessonService;
 
 @RestController
-@RequestMapping(value = "/subjects/{subjectId}/lessons", produces = { MediaType.APPLICATION_JSON_VALUE })
+@RequestMapping(value = "/subjects/{subjectId}/lessons", 
+	produces = { MediaType.APPLICATION_JSON_VALUE })
 public class LessonController {
 
 	final private LessonResourceAssembler lessonResourceAssembler;
 	final private LessonService lessonService;
 
 	@Autowired
-	public LessonController(LessonResourceAssembler lessonResourceAssembler, LessonService lessontService) {
+	public LessonController(LessonResourceAssembler lessonResourceAssembler, 
+			LessonService lessontService) {
 		super();
 		this.lessonResourceAssembler = lessonResourceAssembler;
 		this.lessonService = lessontService;
@@ -40,7 +42,8 @@ public class LessonController {
 	public ResponseEntity<Resources<Resource<Lesson>>> getAllSjubject(@PathVariable int subjectId) {
 
 		List<Lesson> lessonList = lessonService.getAllLessons(subjectId);
-		Resources<Resource<Lesson>> resource = this.lessonResourceAssembler.toLessonResourceList(lessonList, subjectId);
+		Resources<Resource<Lesson>> resource 
+			= this.lessonResourceAssembler.toLessonResourceList(lessonList, subjectId);
 		return new ResponseEntity<Resources<Resource<Lesson>>>(resource, HttpStatus.OK);
 	}
 
@@ -79,7 +82,8 @@ public class LessonController {
 
 	@ExceptionHandler({ NotExistException.class })
 	ResponseEntity<ExceptionMessage> handleNotFounds(Exception e) {
-		ExceptionMessage exceptionMessage = new ExceptionMessage(HttpStatus.NOT_FOUND.toString(), e.getMessage());
+		ExceptionMessage exceptionMessage 
+			= new ExceptionMessage(HttpStatus.NOT_FOUND.toString(), e.getMessage());
 		return new ResponseEntity<ExceptionMessage>(exceptionMessage, HttpStatus.NOT_FOUND);
 	}
 

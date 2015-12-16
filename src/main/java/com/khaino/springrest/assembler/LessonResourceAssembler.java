@@ -10,6 +10,7 @@ import org.springframework.hateoas.Resources;
 import org.springframework.stereotype.Component;
 
 import com.khaino.springrest.constant.Constant;
+import com.khaino.springrest.controller.HomeController;
 import com.khaino.springrest.controller.LessonController;
 import com.khaino.springrest.controller.SubjectController;
 import com.khaino.springrest.model.Lesson;
@@ -47,6 +48,8 @@ public class LessonResourceAssembler {
 		}		
 		Resources<Resource<Lesson>> resource = new Resources<Resource<Lesson>>(resourceList);
 		resource.add(linkTo(LessonController.class, subjectId).withSelfRel());
+		
+		resource.add(linkTo(HomeController.class).withRel(Constant.HOME));
 		
 		return resource;		
 	}

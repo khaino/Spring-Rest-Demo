@@ -15,7 +15,7 @@ public interface SubjectService {
 	
 	public void updateSubject(int subjectId, Subject subject);
 	
-	public void assignTeacher(int subjectId, Subject subject);
+	public void assignTeacher(int subjectId, int teacherId);
 	
 	public void deleteSubject(int subjectId);
 }

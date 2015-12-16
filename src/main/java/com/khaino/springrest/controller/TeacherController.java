@@ -30,7 +30,8 @@ public class TeacherController {
 	final private TeacherService teacherService;
 	
 	@Autowired
-	TeacherController(TeacherResourceAssembler teacherResourceAssembler, TeacherService teacherService){
+	TeacherController(TeacherResourceAssembler teacherResourceAssembler, 
+			TeacherService teacherService){
 		this.teacherResourceAssembler = teacherResourceAssembler;
 		this.teacherService = teacherService;
 	}
@@ -39,13 +40,15 @@ public class TeacherController {
 	public ResponseEntity<Resources<Resource<Teacher>>> getAllTeacher(){		
 		
 		List<Teacher> teacherList = teacherService.getAllTeacher();
-		Resources<Resource<Teacher>> resource = this.teacherResourceAssembler.toTeacherResourceList(teacherList);
+		Resources<Resource<Teacher>> resource 
+			= this.teacherResourceAssembler.toTeacherResourceList(teacherList);
 		return new ResponseEntity<Resources<Resource<Teacher>>>(resource, HttpStatus.OK);
 	}
 
 
 	@RequestMapping( value = "/{teacherId}", method = RequestMethod.GET )
-	public Resource<Teacher> getTeacher(@PathVariable int teacherId) throws NotExistException{
+	public Resource<Teacher> getTeacher(@PathVariable int teacherId) 
+			throws NotExistException{
 		
 		Teacher teacher = teacherService.getTeacher(teacherId);
 		Resource<Teacher> resource = teacherResourceAssembler.toTeacherResource(teacher);
@@ -53,7 +56,8 @@ public class TeacherController {
 	}
 	
 	@RequestMapping( method = RequestMethod.POST )
-	public ResponseEntity<Resource<Teacher>> saveTeacher(@RequestBody Teacher teacher) throws NotExistException{
+	public ResponseEntity<Resource<Teacher>> saveTeacher(@RequestBody Teacher teacher) 
+			throws NotExistException{
 		
 		Teacher newTeacher = teacherService.insertTeacher(teacher);
 		Resource<Teacher> resource = teacherResourceAssembler.toTeacherResource(newTeacher);
@@ -61,14 +65,14 @@ public class TeacherController {
 	}
 	
 	@RequestMapping( value = "/{teacherId}", method = RequestMethod.PUT )
-	public ResponseEntity<Resource<Teacher>> updateTeacher(@RequestBody Teacher teacher, @PathVariable int teacherId) {
+	public ResponseEntity<Resource<Teacher>> updateTeacher(@RequestBody Teacher teacher, 
+			@PathVariable int teacherId) {
 		
 		teacherService.updateTeacher(teacherId, teacher);	
 		teacher.setTeacherId(teacherId);
 		Resource<Teacher> resource = teacherResourceAssembler.toTeacherResource(teacher);
 		return new ResponseEntity<Resource<Teacher>>(resource, HttpStatus.OK);	
-	}
-	
+	}	
 	
 	@RequestMapping( value = "/{teacherId}", method = RequestMethod.DELETE )
 	public ResponseEntity<Void> deleteTeacher( @PathVariable int teacherId){
@@ -81,10 +85,10 @@ public class TeacherController {
 	public ResponseEntity<Resources<Resource<Subject>>> getAllSjubjects(@PathVariable int teacherId){		
 		
 		List<Subject> subjectList = teacherService.getAllSubjectsByTeacher(teacherId);
-		Resources<Resource<Subject>> resource = this.teacherResourceAssembler.toSubjectResourceList(subjectList, teacherId);
+		Resources<Resource<Subject>> resource 
+			= this.teacherResourceAssembler.toSubjectResourceList(subjectList, teacherId);
 		return new ResponseEntity<Resources<Resource<Subject>>>(resource, HttpStatus.OK);
 	}
-	
 	
 	@ExceptionHandler({ NotExistException.class })
     ResponseEntity<ExceptionMessage> handleNotFounds(Exception e) {

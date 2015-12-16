@@ -51,9 +51,9 @@ public interface SubjectDao {
 	
 	@Update("UPDATE subject" 
 			   + " SET"
-			   		+ " teacher_id= #{subject.teacherId}"
-			   	+ " WHERE subject_id= #{id}")
-	public int assignTeacher(@Param("id") int id, @Param("subject")Subject subject);
+			   		+ " teacher_id= #{teacherId}"
+			   	+ " WHERE subject_id= #{subjectId}")
+	public int assignTeacher(@Param("subjectId") int subjectId, @Param("teacherId") int teacherId);
 	
 	
 	@Select("SELECT CURRVAL('subject_subject_id_seq')")
