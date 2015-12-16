@@ -42,7 +42,7 @@
 		ON DELETE RESTRICT;
 </pre>
 
-<p>Though the demo has not been completed, you can start the Get get request, http://localhost:8080/springexample/home, and explore more. Some of the examples of requests and results are :-</P>
+<p>Though the demo has not been completed, you can start with Get request at this link, http://localhost:8080/springexample/home, and explore more. Some of the examples of requests and results are :-</P>
 <pre>
 	{
 	  "message": "This is a simple demo to demonstrate Spring Restful, please follow the links to explore more",
